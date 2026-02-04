@@ -1,17 +1,10 @@
 #include <stdio.h>
+#include <format>
 
 #include "lib.hpp"
 #include "ctgp/ui/racetimer.hpp"
 #include "ctgp/ui/speedometer.hpp"
 #include "base/pointers.hpp"
-
-namespace gear
-{
-    class RaceInfo {};
-    RaceInfo* GetRaceInfo();
-}
-
-#include <format>
 
 HOOK_DEFINE_TRAMPOLINE(LoggerPoC)
 {
