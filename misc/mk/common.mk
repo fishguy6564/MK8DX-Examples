@@ -173,6 +173,33 @@ $(OUTPUT).elf	:	$(OFILES)
 $(OFILES_SRC)	: $(HFILES_BIN)
 
 #---------------------------------------------------------------------------------
+# doOpen_, doIsExistFile_ and getCurrentHeap are also declared in symbols.toml
+# as pattern-matched thunks resolved against the game's own compiled code, so
+# calls always go through the real function rather than this recompiled sead
+# source. Compile these two files normally (their other functions are still
+# needed locally), then hide just those specific symbols from the linker so
+# they don't collide with the generated thunks of the same mangled name.
+#---------------------------------------------------------------------------------
+CONFLICTING_SYMS_seadNinFileDeviceBaseNin := \
+	_ZN4sead17NinFileDeviceBase7doOpen_EPNS_10FileHandleERKNS_14SafeStringBaseIcEENS_10FileDevice12FileOpenFlagE \
+	_ZN4sead17NinFileDeviceBase14doIsExistFile_EPbRKNS_14SafeStringBaseIcEE
+
+CONFLICTING_SYMS_seadHeapMgr := \
+	_ZNK4sead7HeapMgr14getCurrentHeapEv
+
+seadNinFileDeviceBaseNin.o: seadNinFileDeviceBaseNin.cpp
+	$(SILENTMSG) $(notdir $<)
+	$(ADD_COMPILE_COMMAND) add $(CXX) "$(CPPFLAGS) $(CXXFLAGS) -c $< -o $@" $<
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.d $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTCMD)$(OBJCOPY) $(addprefix --localize-symbol=,$(CONFLICTING_SYMS_seadNinFileDeviceBaseNin)) $@
+
+seadHeapMgr.o: seadHeapMgr.cpp
+	$(SILENTMSG) $(notdir $<)
+	$(ADD_COMPILE_COMMAND) add $(CXX) "$(CPPFLAGS) $(CXXFLAGS) -c $< -o $@" $<
+	$(SILENTCMD)$(CXX) -MMD -MP -MF $(DEPSDIR)/$*.d $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@ $(ERROR_FILTER)
+	$(SILENTCMD)$(OBJCOPY) $(addprefix --localize-symbol=,$(CONFLICTING_SYMS_seadHeapMgr)) $@
+
+#---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data
 #---------------------------------------------------------------------------------
 %.bin.o	%_bin.h :	%.bin
