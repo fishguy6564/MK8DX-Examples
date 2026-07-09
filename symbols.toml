@@ -52,18 +52,6 @@ mangled = "_ZN20DemoStartPointCamera21updateGoalBasePosAtt_Ev"
 pattern = "09 B4 B8 F2 09 00 9F F2 69 6A 00 F9 69 C4 B8 52 09 80 9C 72 69 DA 00 B9"
 offset = "-0x34"
 
-################################### sead::NinFileDevice ###############################
-
-[[symbols]]
-mangled = "_ZN4sead17NinFileDeviceBase7doOpen_EPNS_10FileHandleERKNS_14SafeStringBaseIcEENS_10FileDevice12FileOpenFlagE"
-pattern = "F4 03 03 2A F7 03 02 AA F6 03 01 AA F3 03 00 AA 9F 0E 00 71"
-offset = "-0x1C"
-
-[[symbols]]
-mangled = "_ZN4sead17NinFileDeviceBase14doIsExistFile_EPbRKNS_14SafeStringBaseIcEE"
-pattern = "E0 04 A0 52 E8 03 1F AA 40 00 82 72 60 7E 00 B9"
-offset = "-0x2CC"
-
 ##################################### sead::ExpHeap ###################################
 
 [[symbols]]
@@ -809,11 +797,6 @@ offset = "-0x24"
 mangled = "_ZN4gear8UILoader11loadTextureERKN4sead14SafeStringBaseIcEEbNS_17EResourceCategoryE"
 pattern = "6A 06 40 F9 E9 03 1F AA 0D 69 69 38 BF 01 19 6B 4C 69 69 38 EB 17 9F 1A 9F 01 19 6B"
 offset = "-0x84"
-
-[[symbols]]
-mangled = "_ZNK4sead7HeapMgr14getCurrentHeapEv"
-pattern = "68 22 00 91 09 A0 02 91 1F 00 00 F1 08 01 89 9A 00 01 40 F9"
-offset = "-0x24"
 
 [[symbols]]
 mangled = "_ZN4gear17GetResourceLoaderEv"

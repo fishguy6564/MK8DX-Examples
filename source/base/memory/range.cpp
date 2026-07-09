@@ -55,7 +55,7 @@ namespace base::memory
 		// of the wildcard relative to the end of the pattern. This seems to be to avoid
 		// generating an invalid shift value for wildcard spots, but also seems to degrade
 		// the search performance as the wildcard is found closer to the end of the pattern. 
-		for (auto i = index_max - 1; i >= 0; --i)
+		for (auto i = index_max; i-- > 0;)
 			if (!data[i])
 			{
 				shift_max = index_max - i;
